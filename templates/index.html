@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteAI - Study notes summarizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="band">
+    <div class="band-inner">
+      <a class="brand" href="/">Note<span>AI</span></a>
+      <h1>Turn your class notes into a quick study guide</h1>
+      <p>Paste your notes, pick a length, and get a summary, key points and five practice questions.</p>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="workspace">
+      <section class="panel" aria-labelledby="inputTitle">
+        <h2 id="inputTitle">Your notes</h2>
+
+        <textarea id="notes" maxlength="20000" aria-label="Study notes" placeholder="Paste class notes or textbook content here"></textarea>
+        <div class="textarea-meta">
+          <span>Complete notes give better results.</span>
+          <span id="charCount">0 / 20,000</span>
+        </div>
+
+        <div class="link-row">
+          <button class="link-button" id="sampleBtn" type="button">Use sample notes</button>
+          <button class="link-button quiet" id="clearBtn" type="button">Clear</button>
+        </div>
+
+        <div class="controls">
+          <div class="length-field">
+            <label for="length">Summary length</label>
+            <select id="length">
+              <option value="Short">Short</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Detailed">Detailed</option>
+            </select>
+          </div>
+          <button id="generateBtn" class="primary" type="button">Generate summary</button>
+        </div>
+        <p class="note">Your notes are sent to the Groq API to generate the result.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="outputTitle">
+        <h2 id="outputTitle">Study guide</h2>
+
+        <div id="emptyState" class="empty">
+          <p class="empty-title">Your study guide will show up here</p>
+          <ul>
+            <li>A short summary of the notes</li>
+            <li>Key points to remember</li>
+            <li>Five questions to practise with</li>
+          </ul>
+        </div>
+
+        <div id="loadingState" class="loading" hidden>
+          <div class="loader"></div>
+          <p>Reading your notes...</p>
+        </div>
+
+        <div id="errorState" class="error-state" hidden role="alert"></div>
+
+        <div id="resultState" class="result" hidden>
+          <div class="result-bar">
+            <span>Here is your study guide</span>
+            <button id="copyBtn" class="copy" type="button">Copy result</button>
+          </div>
+          <div id="resultText" class="result-body"></div>
+          <p class="disclaimer">The AI can make mistakes. Check important facts against your original notes.</p>
+        </div>
+      </section>
+    </div>
+
+    <footer>NoteAI - Generative AI mini project, built with Flask and the Groq API</footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
